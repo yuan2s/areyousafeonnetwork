@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حماية بياناتك الشخصية - خصوصيتك في خطر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            /* Primary Colors - Navy creates trust, Orange signals warning */
+            --primary-dark: #0f172a;    /* Dark Navy - Background */
+            --primary-main: #1e3a8a;    /* Navy - Headers */
+            
+            /* Accent Colors - Strategic use of orange for warnings */
+            --accent-warning: #f97316;  /* Orange - Critical Alerts */
+            --accent-light: #bae6fd;    /* Light Blue - Highlights */
+            
+            /* Text Colors - Optimized for readability */
+            --text-primary: #f8fafc;    /* Off-white - Main Text */
+            --text-secondary: #cbd5e1;  /* Light Gray - Secondary Text */
+            
+            /* Interactive Colors */
+            --interactive-hover: #3b82f6; /* Bright Blue - Hover States */
+            --card-bg: rgba(30, 41, 59, 0.98); /* Card Background */
+            
+            /* Status Colors */
+            --success: #22c55e;         /* Green - Success States */
+            --danger: #dc2626;          /* Red - Danger States */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Narrower container for better mobile reading */
+            margin: 0 auto;
+            padding: 0.8rem;
+        }
+
+        header {
+            background: linear-gradient(145deg, var(--primary-main), var(--primary-dark));
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .security-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .security-card:active {
+            transform: translateY(1px);
+        }
+
+        .highlight {
+            color: var(--accent-warning);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .highlight i {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--accent-warning);
+            font-weight: 600;
+        }
+
+        .warning-text {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .success-text {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            .container {
+                padding: 0.6rem;
+            }
+
+            .security-card {
+                padding: 1.2rem;
+                margin-bottom: 1rem;
+                border-radius: 10px;
+            }
+
+            .highlight {
+                font-size: 1.1rem;
+                gap: 0.6rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+        }
+
+        /* Touch Area Optimization */
+        .highlight, 
+        .security-card {
+            min-height: 44px; /* Minimum touch target size */
+        }
+
+        /* Reduce Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .security-card {
+                transition: none;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-primary: #ffffff;
+                --accent-warning: #ff6b00;
+            }
+        }
+
+        /* Dark Mode Enhancement */
+        @media (prefers-color-scheme: dark) {
+            .security-card {
+                background: rgba(15, 23, 42, 0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="hero">
+                <h1>حماية بياناتك الشخصية</h1>
+                <p>خصوصيتك أمانة... حافظ عليها</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="security-card">
+            <div class="highlight">
+                <i class="fas fa-shield-alt"></i>
+                هل تعلم أن كل نقرة تقوم بها على الإنترنت قد تُعرضك للخطر؟
+            </div>
+            <p>في عالم اليوم الرقمي، حيث تتداخل حياتنا الشخصية والمهنية مع كل عملية بحث أو رسالة نصية أو حتى لعبة على هاتفنا، هناك شيء مخيف يحدث في الخفاء: <strong>بياناتك الشخصية تُباع، وأنت لا تعلم!</strong></p>
+        </div>
+
+        <div class="security-card">
+            <div class="highlight">
+                <i class="fas fa-exclamation-triangle"></i>
+                كيف؟ ولماذا؟
+            </div>
+            <p>قد تعتقد أن حياتك الرقمية محمية، لكن الحقيقة أسوأ مما تتصور. كل معلومة تتبادلها، كل رابط تفتحه، وكل حساب تُدخل عليه بياناتك... <span class="warning-text">تُجمع، تُسجل، وتُعرض للبيع!</span></p>
+        </div>
+
+        <div class="security-card">
+            <div class="highlight">
+                <i class="fas fa-database"></i>
+                بياناتك... سلع تُتاجر بها!
+            </div>
+            <p>البيانات الشخصية اليوم ليست مجرد معلومات، هي <strong>كنز</strong>! كل ما تفعله على الإنترنت يُكتب عليه ثمن. أرقام الهواتف، العناوين، الكلمات التي تكتبها، حتى المواقع التي تزورها... كل شيء يُحول إلى <strong>منتج قابل للبيع</strong>.</p>
+        </div>
+
+        <div class="security-card">
+            <div class="highlight">
+                <i class="fas fa-user-shield"></i>
+                كيف تحمي نفسك؟
+            </div>
+            <p>الوعي هو سلاحك الأول. لا تنتظر أن يصبح ما هو شخصي في حياتك مِلكًا عامًا.</p>
+            <p><span class="success-text">✓ استخدم كلمات مرور قوية</span></p>
+            <p><span class="success-text">✓ فعّل المصادقة الثنائية (2FA)</span></p>
+        </div>
+
+        <div class="security-card">
+            <div class="highlight">
+                <i class="fas fa-lock"></i>
+                المعركة لم تنتهِ بعد...
+            </div>
+            <p>العالم الرقمي مليء بالتهديدات، لكن القوة بيدك. كل خطوة تقوم بها تُقربك من حماية خصوصيتك. <strong>انت من يقرر كيف تُحفظ وتُحمي</strong>.</p>
+        </div>
+    </main>
+</body>
+</html>
