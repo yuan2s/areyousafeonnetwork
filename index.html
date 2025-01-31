@@ -3,121 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حماية بياناتك الشخصية - خصوصيتك في خطر</title>
+    <title>الأمن السيبراني - تحذيرات وإرشادات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
         :root {
-            /* Primary Colors - Navy creates trust, Orange signals warning */
-            --primary-dark: #0f172a;    /* Dark Navy - Background */
-            --primary-main: #1e3a8a;    /* Navy - Headers */
-            
-            /* Accent Colors - Strategic use of orange for warnings */
-            --accent-warning: #f97316;  /* Orange - Critical Alerts */
-            --accent-light: #bae6fd;    /* Light Blue - Highlights */
-            
-            /* Text Colors - Optimized for readability */
-            --text-primary: #f8fafc;    /* Off-white - Main Text */
-            --text-secondary: #cbd5e1;  /* Light Gray - Secondary Text */
-            
-            /* Interactive Colors */
-            --interactive-hover: #3b82f6; /* Bright Blue - Hover States */
-            --card-bg: rgba(30, 41, 59, 0.98); /* Card Background */
-            
-            /* Status Colors */
-            --success: #22c55e;         /* Green - Success States */
-            --danger: #dc2626;          /* Red - Danger States */
+            --neon-blue: #00ff9d;
+            --dark-bg: #0a0f1e;
+            --card-bg: #12172c;
+            --danger: #ff3e3e;
+            --warning: #ffb700;
+            --success: #00ff9d;
+            --text: #e0e0e0;
+            --grid-size: 30px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: var(--primary-dark);
-            color: var(--text-primary);
-            line-height: 1.7;
-            font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
-            font-size: 16px;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            width: 100%;
-            max-width: 600px; /* Narrower container for better mobile reading */
+        /* Grid Background Animation */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(18, 23, 44, 0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 23, 44, 0.8) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(var(--grid-size)); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0.8rem;
+            padding: 20px;
         }
 
         header {
-            background: linear-gradient(145deg, var(--primary-main), var(--primary-dark));
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero {
             text-align: center;
-            padding: 0.5rem;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(0, 255, 157, 0.1), transparent);
+            border-radius: 15px;
+            margin-bottom: 40px;
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: var(--accent-light);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        .hero p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            font-weight: 500;
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(0, 255, 157, 0.5); }
+            to { text-shadow: 0 0 20px rgba(0, 255, 157, 0.8); }
         }
 
         .security-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
         }
 
-        .security-card:active {
-            transform: translateY(1px);
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .highlight {
-            color: var(--accent-warning);
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .security-card:nth-child(n) {
+            animation-delay: calc(n * 0.1s);
+        }
+
+        .card-header {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 157, 0.2);
         }
 
-        .highlight i {
-            color: var(--accent-light);
-            font-size: 1.1rem;
+        .card-header i {
+            font-size: 24px;
+            color: var(--neon-blue);
+            animation: pulse 2s infinite;
         }
 
-        p {
-            font-weight: 400;
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
-            line-height: 1.8;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
-        strong {
-            color: var(--accent-warning);
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--warning);
             font-weight: 600;
         }
 
@@ -131,114 +145,138 @@
             font-weight: 500;
         }
 
-        /* Mobile Optimizations */
-        @media (max-width: 480px) {
-            body {
-                font-size: 15px;
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 15px;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "⚠️";
+            position: absolute;
+            right: 0;
+            color: var(--warning);
+        }
+
+        strong {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* Scanner Animation */
+        .scanner-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, 
+                transparent, 
+                var(--neon-blue), 
+                transparent
+            );
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
             }
 
-            .container {
-                padding: 0.6rem;
+            h1 {
+                font-size: 2rem;
             }
 
             .security-card {
-                padding: 1.2rem;
-                margin-bottom: 1rem;
-                border-radius: 10px;
-            }
-
-            .highlight {
-                font-size: 1.1rem;
-                gap: 0.6rem;
-            }
-
-            p {
-                font-size: 0.95rem;
-                line-height: 1.7;
-            }
-        }
-
-        /* Touch Area Optimization */
-        .highlight, 
-        .security-card {
-            min-height: 44px; /* Minimum touch target size */
-        }
-
-        /* Reduce Motion */
-        @media (prefers-reduced-motion: reduce) {
-            .security-card {
-                transition: none;
-            }
-        }
-
-        /* High Contrast Mode */
-        @media (prefers-contrast: high) {
-            :root {
-                --text-primary: #ffffff;
-                --accent-warning: #ff6b00;
-            }
-        }
-
-        /* Dark Mode Enhancement */
-        @media (prefers-color-scheme: dark) {
-            .security-card {
-                background: rgba(15, 23, 42, 0.95);
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="hero">
-                <h1>حماية بياناتك الشخصية</h1>
-                <p>خصوصيتك أمانة... حافظ عليها</p>
-            </div>
-        </div>
-    </header>
+    <div class="grid-background"></div>
+    <div class="scanner-line"></div>
+    <div class="content">
+        <header>
+            <h1>حماية الأمن السيبراني</h1>
+            <p>تحذيرات حول مخاطر QR وأمن المعلومات</p>
+        </header>
 
-    <main class="container">
+        <!-- البطاقة الأولى -->
         <div class="security-card">
-            <div class="highlight">
-                <i class="fas fa-shield-alt"></i>
-                هل تعلم أن كل نقرة تقوم بها على الإنترنت قد تُعرضك للخطر؟
-            </div>
-            <p>في عالم اليوم الرقمي، حيث تتداخل حياتنا الشخصية والمهنية مع كل عملية بحث أو رسالة نصية أو حتى لعبة على هاتفنا، هناك شيء مخيف يحدث في الخفاء: <strong>بياناتك الشخصية تُباع، وأنت لا تعلم!</strong></p>
-        </div>
-
-        <div class="security-card">
-            <div class="highlight">
+            <div class="card-header">
                 <i class="fas fa-exclamation-triangle"></i>
-                كيف؟ ولماذا؟
+                <div class="card-title">هل تعلم أن مجرد مسحك لرمز QR قد يسرق بياناتك؟</div>
             </div>
-            <p>قد تعتقد أن حياتك الرقمية محمية، لكن الحقيقة أسوأ مما تتصور. كل معلومة تتبادلها، كل رابط تفتحه، وكل حساب تُدخل عليه بياناتك... <span class="warning-text">تُجمع، تُسجل، وتُعرض للبيع!</span></p>
+            <p>في عالم اليوم، حيث تسيطر التكنولوجيا على كل شيء، باتت الهجمات الإلكترونية أكثر تطورًا ودهاءً من أي وقت مضى. المخترقون لم يعودوا بحاجة لاختراق أجهزة ضخمة أو تنفيذ عمليات معقدة، <strong>بل يكفيهم أن تمسح رمزًا بسيطًا بهاتفك!</strong></p>
         </div>
 
+        <!-- البطاقة الثانية -->
         <div class="security-card">
-            <div class="highlight">
-                <i class="fas fa-database"></i>
-                بياناتك... سلع تُتاجر بها!
+            <div class="card-header">
+                <i class="fas fa-qrcode"></i>
+                <div class="card-title">هجوم استبدال رموز QR: عندما تصبح التقنية سلاحًا ضدك</div>
             </div>
-            <p>البيانات الشخصية اليوم ليست مجرد معلومات، هي <strong>كنز</strong>! كل ما تفعله على الإنترنت يُكتب عليه ثمن. أرقام الهواتف، العناوين، الكلمات التي تكتبها، حتى المواقع التي تزورها... كل شيء يُحول إلى <strong>منتج قابل للبيع</strong>.</p>
+            <p>رموز QR أصبحت جزءًا لا يتجزأ من حياتنا اليومية، تُستخدم في المطاعم، المحلات، التذاكر الإلكترونية، وحتى في عمليات الدفع. لكن ماذا لو أخبرتك أن الرمز الذي تراه أمامك ليس ما تظنه؟</p>
+            <ul>
+                <li>استبدال الرمز الأصلي بآخر خبيث: يمكن للمهاجم أن يطبع ملصقًا جديدًا يحمل رمز QR ضارًا ويضعه فوق الرمز الحقيقي في المطاعم أو الأماكن العامة، مما يجعل الضحية تعتقد أنه رمز رسمي.</li>
+                <li>هجمات التصيد عبر QR (Quishing): ترسل لك رسالة أو بريدًا إلكترونيًا يحتوي على رمز QR، مدعية أنه من جهة موثوقة، مثل البنك أو شركة توصيل، لكن عند المسح، يتم توجيهك إلى موقع خبيث يسرق بياناتك.</li>
+                <li>البرمجيات الخبيثة (Malware Injection): بعض رموز QR تقودك إلى مواقع تحمل برامج ضارة يتم تحميلها تلقائيًا على جهازك دون علمك، لتبدأ بجمع كلمات المرور والمعلومات الحساسة.</li>
+            </ul>
         </div>
 
+        <!-- البطاقة الثالثة -->
         <div class="security-card">
-            <div class="highlight">
-                <i class="fas fa-user-shield"></i>
-                كيف تحمي نفسك؟
+            <div class="card-header">
+                <i class="fas fa-bug"></i>
+                <div class="card-title" style="color: var(--danger)">كيف يتم استغلالك؟</div>
             </div>
-            <p>الوعي هو سلاحك الأول. لا تنتظر أن يصبح ما هو شخصي في حياتك مِلكًا عامًا.</p>
-            <p><span class="success-text">✓ استخدم كلمات مرور قوية</span></p>
-            <p><span class="success-text">✓ فعّل المصادقة الثنائية (2FA)</span></p>
+            <ul>
+                <li>يتم توجيهك إلى صفحة مزيفة تشبه موقعًا رسميًا (مثل موقع البنك أو تسجيل دخول لمواقع التواصل) حيث تُدخل بياناتك، ليتم سرقتها فورًا.</li>
+                <li>يتم تحميل ملف خبيث على هاتفك، قد يكون تروجان تجسس أو برنامج فدية، ليتحكم المهاجم بجهازك.</li>
+                <li>يتم اختراق نظام الدفع الإلكتروني الخاص بك، حيث يقوم المخترق بتحويل الأموال بمجرد أن تحاول إجراء معاملة مالية.</li>
+            </ul>
         </div>
 
+        <!-- البطاقة الرابعة -->
         <div class="security-card">
-            <div class="highlight">
-                <i class="fas fa-lock"></i>
-                المعركة لم تنتهِ بعد...
+            <div class="card-header">
+                <i class="fas fa-radiation"></i>
+                <div class="card-title">هجمات أخرى تستغل سذاجة المستخدم</div>
             </div>
-            <p>العالم الرقمي مليء بالتهديدات، لكن القوة بيدك. كل خطوة تقوم بها تُقربك من حماية خصوصيتك. <strong>انت من يقرر كيف تُحفظ وتُحمي</strong>.</p>
+            <ul>
+                <li>هجمات الشحن الخبيث (Juice Jacking): هل سبق لك أن شحنت هاتفك في محطة عامة؟ قد يكون المنفذ مجهزًا بجهاز سرقة بيانات يسحب كل ما على هاتفك بمجرد توصيله.</li>
+                <li>هجمات الـ NFC: يمكن لمخترق قريب منك أن ينقل برمجيات خبيثة إلى جهازك عبر تقنية الاتصال القريب (NFC) الموجودة في الهواتف الذكية الحديثة.</li>
+                <li>هجمات الـ SIM Swap: يمكن للمهاجم أن يخدع مزود خدمة الهاتف للحصول على شريحة جديدة برقمك، مما يمنحه القدرة على تلقي رسائل التحقق وسرقة حساباتك المصرفية.</li>
+            </ul>
         </div>
-    </main>
+
+        <!-- البطاقة الخامسة -->
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-shield-alt"></i>
+                <div class="card-title" style="color: var(--success)">كيف تحمي نفسك؟</div>
+            </div>
+            <ul>
+                <li>لا تمسح أي رمز QR عشوائيًا، تأكد دائمًا من مصدره.</li>
+                <li>تحقق من عنوان الرابط بعد مسح رمز QR، ولا تدخل أي بيانات إذا كان العنوان مشبوهًا.</li>
+                <li>استخدم تطبيق QR Scanner آمن، بحيث يُنبهك إذا كان الرابط خطيرًا.</li>
+                <li>لا تشحن هاتفك في أماكن عامة دون استخدام "USB Data Blocker"، لمنع نقل البيانات أثناء الشحن.</li>
+                <li>لا تثق بأي رابط يُرسل إليك عبر رسائل نصية أو بريد إلكتروني، حتى لو بدا رسميًا.</li>
+            </ul>
+            <p class="success-text">تذكر: الحذر والوعي هما أقوى أدوات الحماية!</p>
+        </div>
+    </div>
 </body>
 </html>
