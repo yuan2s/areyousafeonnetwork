@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أمن NFC - المخاطر والحماية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --neon-blue: #00ff9d;
+            --dark-bg: #0a0f1e;
+            --card-bg: #12172c;
+            --danger: #ff3e3e;
+            --warning: #ffb700;
+            --success: #00ff9d;
+            --text: #e0e0e0;
+            --grid-size: 30px;
+            --purple: #9d00ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(18, 23, 44, 0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 23, 44, 0.8) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(var(--grid-size)); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: var(--neon-blue);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 255, 157, 0.2);
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(157, 0, 255, 0.1), transparent);
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--purple);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
+            animation: glowPurple 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPurple {
+            from { text-shadow: 0 0 10px rgba(157, 0, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(157, 0, 255, 0.8); }
+        }
+
+        .security-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(157, 0, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .security-card:nth-child(n) {
+            animation-delay: calc(n * 0.1s);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(157, 0, 255, 0.2);
+        }
+
+        .card-header i {
+            font-size: 24px;
+            color: var(--purple);
+            animation: pulse 2s infinite;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .warning-text {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .success-text {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 15px;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "⚡";
+            position: absolute;
+            right: 0;
+            color: var(--purple);
+        }
+
+        .tech-diagram {
+            background: rgba(157, 0, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .attack-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .attack-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .attack-arrow {
+            color: var(--danger);
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .security-card {
+                padding: 20px;
+            }
+
+            .attack-flow {
+                flex-direction: column;
+            }
+
+            .attack-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="content">
+        <a href="index.html" class="nav-button">
+            <i class="fas fa-arrow-right"></i>
+            العودة إلى الصفحة الرئيسية
+        </a>
+
+        <header>
+            <h1>هجمات NFC المتقدمة</h1>
+            <p>كيف يمكن اختراق هاتفك عبر تقنية NFC؟</p>
+        </header>
+
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-broadcast-tower"></i>
+                <div class="card-title">ما هو NFC وكيف يعمل؟</div>
+            </div>
+            <p>تقنية NFC (الاتصال قريب المدى) هي تقنية اتصال لاسلكي تعمل على مسافات قصيرة (حتى 4 سم). تُستخدم في:</p>
+            <ul>
+                <li>عمليات الدفع اللاتلامسي</li>
+                <li>نقل البيانات بين الأجهزة</li>
+                <li>قراءة البطاقات الذكية</li>
+                <li>فتح الأبواب الإلكترونية</li>
+            </ul>
+        </div>
+
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-user-ninja"></i>
+                <div class="card-title">تقنيات الاختراق عبر NFC</div>
+            </div>
+            <div class="attack-flow">
+                <div class="attack-step">
+                    <i class="fas fa-mobile-alt"></i>
+                    <p>جهاز الضحية</p>
+                </div>
+                <div class="attack-arrow">➜</div>
+                <div class="attack-step">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <p>جهاز المهاجم المخفي</p>
+                </div>
+                <div class="attack-arrow">➜</div>
+                <div class="attack-step">
+                    <i class="fas fa-database"></i>
+                    <p>سرقة البيانات</p>
+                </div>
+            </div>
+            <ul>
+                <li>هجمات Relay: يقوم المهاجم بنقل إشارة NFC من جهاز الضحية إلى موقع آخر</li>
+                <li>هجمات Man-in-the-Middle: اعتراض وتعديل البيانات المتبادلة</li>
+                <li>هجمات Eavesdropping: التنصت على الاتصالات اللاسلكية</li>
+                <li>هجمات Data Modification: تغيير البيانات أثناء نقلها</li>
+            </ul>
+        </div>
+
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="card-title">سيناريوهات الهجوم الحقيقية</div>
+            </div>
+            <ul>
+                <li>وضع أجهزة قراءة مخفية في المحطات العامة</li>
+                <li>سرقة بيانات البطاقات البنكية عن بُعد</li>
+                <li>تثبيت برمجيات خبيثة عبر اتصال NFC غير مرغوب</li>
+                <li>نسخ مفاتيح الأبواب الإلكترونية</li>
+            </ul>
+            <div class="tech-diagram">
+                <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: var(--danger)"></i>
+                <p class="warning-text">يمكن للمهاجم سرقة بياناتك من مسافة تصل إلى 10 سم باستخدام أجهزة متقدمة!</p>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-shield-alt"></i>
+                <div class="card-title" style="color: var(--success)">كيفية الحماية من هجمات NFC</div>
+            </div>
+            <ul>
+                <li>إيقاف تشغيل NFC عندما لا تحتاج إليه</li>
+                <li>استخدام محافظ مضادة للتردد اللاسلكي (RFID-blocking wallets)</li>
+                <li>تفعيل خاصية "Secure Element" في هاتفك</li>
+                <li>عدم تمرير هاتفك على أجهزة NFC مجهولة المصدر</li>
+                <li>تحديث نظام هاتفك باستمرار للحصول على تحديثات الأمان</li>
+            </ul>
+            <p class="success-text">تذكر: الأمان يبدأ من الوعي والحذر!</p>
+        </div>
+
+        <div class="security-card">
+            <div class="card-header">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="card-title">نصائح متقدمة للخبراء</div>
+            </div>
+            <ul>
+                <li>استخدام تطبيقات فحص NFC للكشف عن الأجهزة القريبة</li>
+                <li>تفعيل التشفير End-to-End في تطبيقات نقل البيانات</li>
+                <li>استخدام أنظمة المصادقة المتعددة العوامل</li>
+                <li>مراقبة سجلات الاتصال NFC بشكل دوري</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
